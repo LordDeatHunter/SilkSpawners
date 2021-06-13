@@ -6,11 +6,11 @@
   "name": "SilkSpawners",
   "description": "Mine spawners with silk touch!",
   "authors": [
-    "DeatHunter"
+    "LordDeatHunter"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/silkspawners/",
+    "sources": "https://github.com/LordDeatHunter/SilkSpawners/"
   },
 
   "license": "MIT",
@@ -27,11 +27,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.7.4",
+    "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "flamingo": "*"
+    "minecraft": "1.17.x",
+    "java": ">=16"
   }
+
 }
