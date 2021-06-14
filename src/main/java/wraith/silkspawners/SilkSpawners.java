@@ -7,13 +7,10 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
 import net.minecraft.loot.condition.MatchToolLootCondition;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.CopyNbtLootFunction;
 import net.minecraft.loot.provider.nbt.ContextLootNbtProvider;
-import net.minecraft.loot.provider.nbt.LootNbtProvider;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.item.EnchantmentPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
@@ -26,16 +23,16 @@ public class SilkSpawners implements ModInitializer {
         LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
             if ((new Identifier("blocks/spawner")).equals(id)) {
                 FabricLootPoolBuilder builder = FabricLootPoolBuilder.builder()
-                        .rolls(ConstantLootNumberProvider.create(1))
-                        .withEntry(ItemEntry.builder(Items.SPAWNER).build())
-                        .withFunction(CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
-                                .withOperation("SpawnData", "BlockEntityTag.SpawnData")
-                                .withOperation("SpawnPotentials", "BlockEntityTag.SpawnPotentials").build()
-                        )
-                        .withCondition(MatchToolLootCondition.builder(
-                                ItemPredicate.Builder.create()
-                                        .tag(FabricToolTags.PICKAXES)
-                                        .enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.atLeast(1)))).build());
+                    .rolls(ConstantLootNumberProvider.create(1))
+                    .withEntry(ItemEntry.builder(Items.SPAWNER).build())
+                    .withFunction(CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
+                        .withOperation("SpawnData", "BlockEntityTag.SpawnData")
+                        .withOperation("SpawnPotentials", "BlockEntityTag.SpawnPotentials").build()
+                    )
+                    .withCondition(MatchToolLootCondition.builder(
+                        ItemPredicate.Builder.create()
+                            .tag(FabricToolTags.PICKAXES)
+                            .enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.atLeast(1)))).build());
                 supplier.withPool(builder.build());
             }
         });

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class BlockItemMixin {
 
     @Redirect(method = "writeTagToBlockEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/BlockEntity;copyItemDataRequiresOperator()Z"))
-    private static boolean silkyspawners_writeTagToBlockEntity(BlockEntity blockEntity) {
+    private static boolean writeTagToBlockEntity(BlockEntity blockEntity) {
         return blockEntity.copyItemDataRequiresOperator() && !(blockEntity instanceof MobSpawnerBlockEntity);
     }
 
