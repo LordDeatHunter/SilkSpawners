@@ -10,11 +10,12 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/silkspawners/",
-    "sources": "https://github.com/LordDeatHunter/SilkSpawners/"
+    "sources": "https://github.com/LordDeatHunter/SilkSpawners/",
+    "issues": "https://github.com/LordDeatHunter/SilkSpawners/issues"
   },
 
   "license": "MIT",
-  "icon": "assets/SilkSpawners.png",
+  "icon": "icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -29,8 +30,8 @@
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": "1.17.x",
-    "java": ">=16"
+    "minecraft": "1.18.x",
+    "java": ">=17"
   }
 
 }
