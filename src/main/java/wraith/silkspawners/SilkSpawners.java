@@ -3,7 +3,6 @@ package wraith.silkspawners;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
 import net.minecraft.loot.condition.MatchToolLootCondition;
@@ -31,7 +30,6 @@ public class SilkSpawners implements ModInitializer {
                     )
                     .withCondition(MatchToolLootCondition.builder(
                         ItemPredicate.Builder.create()
-                            .tag(FabricToolTags.PICKAXES)
                             .enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.atLeast(1)))).build());
                 supplier.withPool(builder.build());
             }
