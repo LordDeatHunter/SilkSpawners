@@ -1,10 +1,10 @@
 package wraith.silkspawners;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
-import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
 import net.minecraft.loot.condition.MatchToolLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.CopyNbtLootFunction;
@@ -19,19 +19,25 @@ public class SilkSpawners implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
+        LootTableEvents.MODIFY.register((resourceManager, manager, id, supplier, setter) -> {
             if ((new Identifier("blocks/spawner")).equals(id)) {
-                FabricLootPoolBuilder builder = FabricLootPoolBuilder.builder()
-                    .rolls(ConstantLootNumberProvider.create(1))
-                    .withEntry(ItemEntry.builder(Items.SPAWNER).build())
-                    .withFunction(CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
-                        .withOperation("SpawnData", "BlockEntityTag.SpawnData")
-                        .withOperation("SpawnPotentials", "BlockEntityTag.SpawnPotentials").build()
+                LootPool.Builder builder = LootPool.builder();
+                builder.rolls(ConstantLootNumberProvider.create(1))
+                    .with(ItemEntry.builder(Items.SPAWNER).build())
+                    .apply(
+                        CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
+                            .withOperation("SpawnData", "BlockEntityTag.SpawnData")
+                            .withOperation("SpawnPotentials", "BlockEntityTag.SpawnPotentials")
+                            .build()
                     )
-                    .withCondition(MatchToolLootCondition.builder(
-                        ItemPredicate.Builder.create()
-                            .enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.atLeast(1)))).build());
-                supplier.withPool(builder.build());
+                    .conditionally(
+                        MatchToolLootCondition.builder(
+                            ItemPredicate.Builder.create().enchantment(
+                                new EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.atLeast(1))
+                            )
+                        ).build()
+                    );
+                supplier.pool(builder.build());
             }
         });
     }
